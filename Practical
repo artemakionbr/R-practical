@@ -14,3 +14,122 @@ library(RadialMR)
 library(TwoSampleMR)
 library(mrclust)
 library(MVMR)
+
+exposure_dat <- extract_instruments('ieu-b-110', p1 = 5e-08, r2 = 0.001, kb =
+10000)
+outcome_dat <- extract_outcome_data(exposure_dat$SNP, c('ieu-a-7'),
+proxies = 1, rsq = 0.8, align_alleles = 1,
+palindromes = 1, maf_threshold = 0.3)
+
+mv_exp_dat <- mv_extract_exposures(c('ieu-b-110','ieu-b-109','ieu-b-111'))
+mv_out_dat <- extract_outcome_data(mv_exp_dat$SNP, c('ieu-a-7'),
+proxies = 1, rsq = 0.8, align_alleles = 1,
+palindromes = 1, maf_threshold = 0.3
+
+dat <- harmonise_data(exposure_dat, outcome_dat, action = 2)
+
+#Obtain IVW estimate
+results <- mr(dat, method_list = c("mr_ivw"))
+
+exp(results$b)
+
+exp(results$b - 1.96*results$se)
+
+exp(results$b + 1.96*results$se)
+
+#Test for Heterogeneity
+mr_heterogeneity(dat)
+
+#Interpret results
+
+#add the weighted Median, weighted Mode and MR Egger effect estimates to the IVW
+result obtained in part 1
+results <- mr(dat, method_list = c("mr_ivw", "mr_weighted_median", "mr_weight
+ed_mode",
+"mr_egger_regression")
+
+#Intercept- is it different from zero?
+mr_pleiotropy_test(dat)
+
+#Is there evidence of pleiotropy in the effect estimate obtained in
+Question 1?
+
+#Generate plots
+plots <- mr_scatter_plot(results, dat)
+plots[[1]]
+
+#Forest plot of the Wald ration for each SNP
+res_single <- mr_singlesnp(dat)
+plot_forest <- mr_forest_plot(res_single)
+plot_forest[[1]]
+
+#fuNNEL
+plot_funnel <- mr_funnel_plot(res_single)
+plot_funnel[[1]]
+
+#Test the direction of the causal effect with Steiger test
+#we first need to add some additional columns to the dataset
+
+dat$samplesize.exposure <- 441016
+dat$r_exp <- get_r_from_bsen(
+b = dat$beta.exposure,
+se = dat$se.exposure,
+n = dat$samplesize.exposure)
+dat$units.outcome <- "log odds"
+dat$ncase.outcome <- 60801
+dat$ncontrol.outcome <- 123504
+dat$prevalence.outcome <- 0.05
+dat$r_out <- get_r_from_lor(
+lor = dat$beta.outcome,
+af = dat$eaf.outcome,
+ncase = dat$ncase.outcome,
+ncontrol = dat$ncontrol.outcome,
+prevalence = dat$prevalence.outcome,
+model = "logit",
+correction = FALSE
+)
+
+steiger_res <- mr_steiger(
+p_exp = dat$pval.exposure,
+p_out = dat$pval.outcome,
+n_exp = dat$samplesize.exposure,
+n_out = dat$samplesize.outcome,
+r_exp = dat$r_exp,
+r_out = dat$r_out)
+steiger_res
+
+#MVMR
+
+#we are using the ‘MVMR’ package to estimate the model, however, much of this estimation could also be done within the ‘TwoSampleMR’ package.
+#The MVMR package does not store the names of the exposures. In this example;• exposure 1 is HDL-C• exposure 2 is LDL-C• exposure 3 is triglycerides
+
+#Data PREP
+#Harmonize Data
+
+mv <- mv_harmonise_data(mv_exp_dat, mv_out_dat, harmonise_strictness = 2)
+
+#format the data for the MVMR package
+mv_dat <- format_mvmr(mv$exposure_beta, mv$outcome_beta, mv$exposure_se,
+mv$outcome_se, rownames(mv$exposure_beta))
+
+#How many instruments are there for MVMR?
+
+#Test the strength of the SNPs to jointly predict all of the exposures
+#As our exposures come from the same dataset, to calculate the conditional F-statistics we need to generate a matrix of the covariance between the error terms in the SNP-exposure
+#associations for each exposure. The simplest way to do this is to use the function ‘phenocov_mvmr()’ and phenotypic correlations between the exposures. In this case those
+#correlations have been calculated from individual-level UK Biobank data.
+
+pheno_mat <- matrix(c(1, 0.18, -0.35,
+0.18, 1, 0.33,
+-0.35, 0.33, 1), nrow=3, ncol=3)
+gencov <- phenocov_mvmr(pheno_mat, mv$exposure_se)
+strength_mvmr(mv_dat, gencov)
+
+#Calculate the MVMR-IVW effect estimate for each exposure
+ivw_mvmr(mv_dat, gencov)
+
+#Calculate the heterogeneity Q-statistic for the MVMR model.
+pleiotropy_mvmr(mv_dat, gencov)
+
+#Interpret these results. Do the MVMR results support the univariable MR results?
+
