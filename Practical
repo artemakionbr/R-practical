@@ -1,0 +1,16 @@
+#install.packages("remotes")
+#install.packages("tidyverse")
+library(remotes)
+library(tidyverse)
+#install_github("WSpiller/RadialMR")
+#install.packages('RadialMR', repos = c('https://mrcieu.r-universe.dev', 'htt
+ps://cloud.r-project.org'))
+#install.packages('mrclust', repos = c('https://mrcieu.r-universe.dev', 'http
+s://cloud.r-project.org'))
+#install_github("MRCIEU/TwoSampleMR")
+#install.packages('MVMR', repos = c('https://mrcieu.r-universe.dev', 'https:/
+/cloud.r-project.org'))
+library(RadialMR)
+library(TwoSampleMR)
+library(mrclust)
+library(MVMR)
