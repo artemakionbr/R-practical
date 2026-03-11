@@ -43,11 +43,8 @@ mr_heterogeneity(dat)
 
 #Interpret results
 
-#add the weighted Median, weighted Mode and MR Egger effect estimates to the IVW
-result obtained in part 1
-results <- mr(dat, method_list = c("mr_ivw", "mr_weighted_median", "mr_weight
-ed_mode",
-"mr_egger_regression")
+#add the weighted Median, weighted Mode and MR Egger effect estimates to the IVW result obtained in part 1
+results <- mr(dat, method_list = c("mr_ivw", "mr_weighted_median", "mr_weighted_mode", "mr_egger_regression"))
 
 #Intercept- is it different from zero?
 mr_pleiotropy_test(dat)
