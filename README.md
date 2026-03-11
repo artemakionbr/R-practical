@@ -1,5 +1,21 @@
 # R-practical
 
+In this practical we will estimate the effect of low density lipoprotein cholesterol (LDL-C)
+on coronary heart disease (CHD) using a range of pleiotropy robust methods. This practical
+uses summary-level data from a GWAS on LDL-C in UK Biobank (Richardson et al, 2020)
+and from a GWAS of CHD conducted in a mixed ancestry (77% European) GWAS (Nikpay et
+al, 2015). We will also include a multivariable MR estimation including summary-level data
+on high density lipoprotein cholesterol (HDL-C) and triglycerides generated from a GWAS
+of the same data as LDL-C.
+
+This practical covers a number of different approaches to pleiotropy robust MR and
+sensitivity analyses that could be included as part of a MR analysis. The particular
+methods used here are neither an exhaustive list of what could be used nor a definitive list
+of what should be used. This practical instead provides an example of the range of issues
+that should be considered when assessing whether a particular MR estimate is likely to be
+biased by the presence of pleiotropy. References for each of the methods are given at the
+end
+
 References: 
 Richardson, Tom G., et al. “Evaluating the relationship between circulating lipoprotein
 lipids and apolipoproteins with risk of coronary heart disease: A multivariable Mendelian
