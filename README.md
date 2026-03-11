@@ -23,11 +23,13 @@ invalid instruments: effect estimation and bias detection through Egger regressi
 International journal of epidemiology 44.2 (2015): 512-525.
 
 Steiger filtering:
+
 Hemani, Gibran, Kate Tilling, and George Davey Smith. “Orienting the causal relationship
 between imprecisely measured traits using GWAS summary data.” PLoS genetics 13.11
 (2017): e1007081
 
 Multivariable MR:
+
 Burgess, Stephen, and Simon G. Thompson. “Multivariable Mendelian randomization: the
 use of pleiotropic genetic variants to estimate causal effects.” American journal of
 epidemiology 181.4 (2015): 251-260.
