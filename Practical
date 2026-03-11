@@ -49,8 +49,7 @@ results <- mr(dat, method_list = c("mr_ivw", "mr_weighted_median", "mr_weighted_
 #Intercept- is it different from zero?
 mr_pleiotropy_test(dat)
 
-#Is there evidence of pleiotropy in the effect estimate obtained in
-Question 1?
+#Is there evidence of pleiotropy in the effect estimate obtained in Question 1?
 
 #Generate plots
 plots <- mr_scatter_plot(results, dat)
