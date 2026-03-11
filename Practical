@@ -25,7 +25,7 @@ palindromes = 1, maf_threshold = 0.3)
 mv_exp_dat <- mv_extract_exposures(c('ieu-b-110','ieu-b-109','ieu-b-111'))
 mv_out_dat <- extract_outcome_data(mv_exp_dat$SNP, c('ieu-a-7'),
 proxies = 1, rsq = 0.8, align_alleles = 1,
-palindromes = 1, maf_threshold = 0.3
+palindromes = 1, maf_threshold = 0.3)
 
 dat <- harmonise_data(exposure_dat, outcome_dat, action = 2)
 
