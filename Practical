@@ -3,17 +3,18 @@
 library(remotes)
 library(tidyverse)
 #install_github("WSpiller/RadialMR")
-#install.packages('RadialMR', repos = c('https://mrcieu.r-universe.dev', 'htt
-ps://cloud.r-project.org'))
-#install.packages('mrclust', repos = c('https://mrcieu.r-universe.dev', 'http
-s://cloud.r-project.org'))
+#install.packages('RadialMR', repos = c('https://mrcieu.r-universe.dev', 'https://cloud.r-project.org'))
+#install.packages('mrclust', repos = c('https://mrcieu.r-universe.dev', 'https://cloud.r-project.org'))
 #install_github("MRCIEU/TwoSampleMR")
-#install.packages('MVMR', repos = c('https://mrcieu.r-universe.dev', 'https:/
-/cloud.r-project.org'))
+#install.packages('MVMR', repos = c('https://mrcieu.r-universe.dev', 'https://cloud.r-project.org'))
 library(RadialMR)
 library(TwoSampleMR)
 library(mrclust)
 library(MVMR)
+
+#If needed:
+#Go to https://api.opengwas.io. Log in and copy your JWT token.
+#Sys.setenv(OPENGWAS_JWT="your_token_here")
 
 exposure_dat <- extract_instruments('ieu-b-110', p1 = 5e-08, r2 = 0.001, kb =
 10000)
